@@ -1,0 +1,45 @@
+html{
+    --my_blue: #4273af;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after{
+    box-sizing: inherit;
+}
+
+body{
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: cover;
+    height: 100%;
+    margin: 0% 0%;
+}
+
+h1{
+    font: bold;
+    padding: 10px;
+    margin-top: 0px;
+    text-align: center;
+}
+
+#titulo-navegacao{
+    background-color: var(--my_blue);
+    text-align: center;
+    color: white;
+    padding: 10px 0;
+}
+
+#titulo{
+    display: inline;
+    vertical-align: middle;
+}
+
+#titulo img{
+    width: 5%;
+    height: 5%;
+}
+
+#navegacao a{
+    margin: 0px 10px;
+    font-weight: bold;
+}
