@@ -13,20 +13,28 @@ class Tamanho(models.Model):
 
     tamanho = models.CharField(max_length=7, choices=TIPO_TAMANHO)
 
+    def __str__(self) -> str:
+        return f"Nome: {self.tamanho}"
+
+    def __repr__(self) -> str:
+        return str(self)
+    
 class Pizza(models.Model):
-    nome = models.CharField(max_length=50)
+    nome = models.CharField(max_length=50, unique=True)
     preco = models.DecimalField(max_digits=5, decimal_places=2)
-    imagem = models.ImageField(null=True)
+    imagem = models.ImageField(upload_to="media/imagens/", null=True)
     tamanho = models.ForeignKey(Tamanho, on_delete=models.CASCADE)
+    outro_sabor = models.ForeignKey("Pizza", on_delete=models.CASCADE, null=True)
 
     def __str__(self) -> str:
-        return f"Nome: {self.nome}, Preço: R${self.preco}"
+        return f"Nome: {self.nome} Preço: R${self.preco} Tamanho: {self.tamanho.tamanho}"
 
     def __repr__(self) -> str:
         return str(self)
 
-class Ingredientes(models.Model):
-    nome = models.CharField(max_length=50)
+
+class Ingrediente(models.Model):
+    nome = models.CharField(max_length=50, unique=True)
 
     def __str__(self) -> str:
         return f"Nome: {self.nome}"
@@ -37,7 +45,7 @@ class Ingredientes(models.Model):
 # conecta pizzas a ingredientes (relação N por N)
 class composicao(models.Model):
     fk_pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
-    fk_ingredientes = models.ForeignKey(Ingredientes, on_delete=models.CASCADE)
+    fk_ingredientes = models.ForeignKey(Ingrediente, on_delete=models.CASCADE)
 
 class TipoBebida(models.Model):
     REFRIGERANTE = "Refrigerante"
@@ -52,18 +60,30 @@ class TipoBebida(models.Model):
 
     name = models.CharField(max_length=12, choices=TIPO_BEBIDAS)
 
-class Bebida(models.Model):
-    nome = models.CharField(max_length=50)
-    tipo = models.ForeignKey(TipoBebida, on_delete=models.CASCADE)
-
     def __str__(self) -> str:
-        return f"Nome: {self.nome}"
+        return f"Nome: {self.name}"
 
     def __repr__(self) -> str:
         return str(self)
 
+class Bebida(models.Model):
+    nome = models.CharField(max_length=50, unique=True)
+    imagem = models.ImageField(upload_to="media/imagens/", null=True)
+    preco = models.DecimalField(max_digits=5, decimal_places=2)
+    tipo = models.ForeignKey(TipoBebida, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"Nome: {self.nome}  Preço: R${self.preco}"
+
+    def __repr__(self) -> str:
+        return str(self)
+    
+class Combo(models.Model):
+    descricao = models.CharField(max_length=100, unique=True)
+    preco = models.DecimalField(max_digits=5, decimal_places=2)
+
 class Pedido(models.Model):
-    codigo = models.CharField(max_length=10)
+    codigo = models.CharField(max_length=10, unique=True)
     data = models.DateTimeField()
     total = models.DecimalField(max_digits=8, decimal_places=2)
     fk_pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
@@ -75,12 +95,21 @@ class Pedido(models.Model):
     def __repr__(self) -> str:
         return str(self)
 
+class Bairro(models.Model):
+    nome = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return f"Nome: {self.nome}"
+
+    def __repr__(self) -> str:
+        return str(self)
+
 class Endereco(models.Model):
-    bairro = models.CharField(max_length=50)
     rua = models.CharField(max_length=50)
     numero = models.IntegerField()
     complemento = models.CharField(max_length=20, null=True)
     CEP = models.CharField(max_length=8)
+    fk_bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f"Bairro: {self.bairro} Rua: {self.rua}"
@@ -90,7 +119,7 @@ class Endereco(models.Model):
     
 class Cliente(models.Model):
     nome = models.CharField(max_length=50)
-    telefone = models.CharField(max_length=13)
+    telefone = models.CharField(max_length=13, unique=True)
     fk_pedidos = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     fk_endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE)
 

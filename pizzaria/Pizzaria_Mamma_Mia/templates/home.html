@@ -1,5 +1,9 @@
 {% extends "index.html" %}
 {% load static %}
 {% block conteudo %}
-<p>PIZZAS AQ</p>
+<p>BEBIDAS AQ</p>
+{% for bebida in bebidas %}
+    <p>{{bebida.nome}} R${{bebida.preco}}</p>
+    <img src="{{bebida.imagem.url}}">
+{% endfor %}
 {% endblock %}
