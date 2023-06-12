@@ -1,0 +1,68 @@
+{% extends "index.html" %}
+{% load static %}
+{% block conteudo %}
+<ul class="aba">
+	<li><a  id="aba1" class="aba-option active" href="javascript:void(0);" onclick="openTab('tab1', 'aba1')">🍕 Pizzas</a></li>
+	<li><a  id="aba2" class="aba-option" href="javascript:void(0);" onclick="openTab('tab2', 'aba2')">🥤 Bebidas</a></li>
+</ul>
+<hr>
+
+<div class="cardapio">
+    <div id="tab1" class="tab-content active">
+        <h2 class="titulo-cardapio">Pizzas</h2>
+        <div class="pizzas-cardapio">
+            {% for pizza in pizzas %}
+                <div class="pizzas">
+                    <img src="{{pizza.imagem.url}}" class="imagem-cardapio">
+                    <button class="btn_pedido">PEÇA POR R$ {{pizza.preco}} </button>
+                    <p>{{pizza.nome}} - {{pizza.tamanho}}</p>
+                    <p>
+                        {% for ingrediente in pizza.ingredientes %}
+                            <span>{{pizza.ingrediente}}</span>
+                        {% endfor %}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div id="tab2" class="tab-content">
+        <h2 class="titulo-cardapio">BEBIDAS</h2>
+        <div class="bebidas-cardapio">
+            {% for bebida in bebidas %}
+                <div class="bebida">
+                    <div><img src="{{bebida.imagem.url}}" class="imagem-cardapio"></div>
+                    <button class="btn_pedido">PEÇA POR R$ {{bebida.preco}} </button>
+                    <p>{{bebida.nome}}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    function openTab(tabId, abaId) {
+      // Esconder todo o conteúdo das abas
+      var tabContents = document.getElementsByClassName('tab-content');
+      for (var i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove('active');
+      }
+      
+      // Mostrar o conteúdo da aba selecionada
+      var selectedTab = document.getElementById(tabId);
+      selectedTab.classList.add('active');
+
+      // Esconder todo o conteúdo das abas
+      var tabContents = document.getElementsByClassName('aba-option');
+      for (var i = 0; i < tabContents.length; i++) {
+        tabContents[i].classList.remove('active');
+      }
+      
+      // Mostrar o conteúdo da aba selecionada
+      var selectedTab = document.getElementById(abaId);
+      selectedTab.classList.add('active');
+
+    }
+</script>
+
+
+{% endblock %}

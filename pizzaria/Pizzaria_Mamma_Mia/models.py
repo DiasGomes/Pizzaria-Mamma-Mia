@@ -22,9 +22,9 @@ class Tamanho(models.Model):
 class Pizza(models.Model):
     nome = models.CharField(max_length=50, unique=True)
     preco = models.DecimalField(max_digits=5, decimal_places=2)
-    imagem = models.ImageField(upload_to="media/imagens/", null=True)
+    imagem = models.ImageField(null=True)
     tamanho = models.ForeignKey(Tamanho, on_delete=models.CASCADE)
-    outro_sabor = models.ForeignKey("Pizza", on_delete=models.CASCADE, null=True)
+    outro_sabor = models.ForeignKey("Pizza", on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self) -> str:
         return f"Nome: {self.nome} Preço: R${self.preco} Tamanho: {self.tamanho.tamanho}"

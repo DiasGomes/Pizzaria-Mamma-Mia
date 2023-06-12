@@ -53,3 +53,100 @@ h1{
 #navegacao a:visited{
     color: #FFF;
 }
+
+.cardapio{
+    width: 60%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    text-align: center;
+}
+
+.imagem-cardapio{
+    height: 100px;
+}
+
+.titulo-cardapio{
+    color: #4273af;
+}
+
+.btn_pedido{
+    background-color: red;
+    border-radius: 5px 5px;
+    color: white;
+    font-weight: bold;
+    width: 80%;
+    height: 30px;
+}
+
+.bebidas-cardapio, .pizzas-cardapio{
+    text-align: center;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.bebida, .pizzas{
+    margin: 0;
+    width: 33%;
+}
+
+.aba{
+    margin-top: 10px;
+    margin-bottom: 0;
+    padding: 0;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.aba-option{
+    text-decoration: none;
+    color: gray;
+    margin: 0 10px;
+    outline:none; 
+    border:none;
+    background-color: Transparent;
+    cursor: pointer;
+}
+
+.aba-option.active{
+    text-decoration: none;
+    color: blue;
+    margin: 0 10px;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+}
+
+.aba-option.active:after{
+    text-decoration: none;
+    position: absolute;
+    bottom: -10px;
+    left:0;
+    content: '';
+    height: 3px;
+    width: 100%;
+    background-color: blue;
+    transition: -1s;
+}
+
+.aba hr{
+    color: gray;
+    margin: 7px 0;
+}
+
+.tab-content{
+    display: none;
+}
+  
+.tab-content.active {
+    display: block;
+}
+
+.aba li{
+    display:inline-block;
+    border-bottom: 0;
+}

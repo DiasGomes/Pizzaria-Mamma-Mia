@@ -6,6 +6,7 @@ from django.conf import settings
 
 urlpatterns = [
     path("", Home.as_view(), name="home"),
+    path("cardapio/", Cardapio.as_view(), name="cardapio"),
     path("login/", Login.as_view(), name="login"),
     path('admin/', admin.site.urls),
     path('cadastro/', cadastro, name="cadastrar"),
