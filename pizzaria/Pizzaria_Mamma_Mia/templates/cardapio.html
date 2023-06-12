@@ -11,11 +11,15 @@
     <div id="tab1" class="tab-content active">
         <h2 class="titulo-cardapio">Pizzas</h2>
         <div class="pizzas-cardapio">
-            {% for pizza in pizzas %}
+            {% for pizza in sabores %}
                 <div class="pizzas">
-                    <img src="{{pizza.imagem.url}}" class="imagem-cardapio">
-                    <button class="btn_pedido">PEÇA POR R$ {{pizza.preco}} </button>
-                    <p>{{pizza.nome}} - {{pizza.tamanho}}</p>
+                    {% if bebida.imagem %}
+                        <img src="{{pizza.imagem.url}}" class="imagem-cardapio">
+                    {% else %}
+                        <img class="imagem-cardapio" src="https://www.tudodesenhos.com/uploads/images/4973/pizza-inteira.jpg">
+                    {% endif %}
+                    <button class="btn_pedido">PEÇA AGORA</button>
+                    <p>{{pizza.nome}}</p>
                     <p>
                         {% for ingrediente in pizza.ingredientes %}
                             <span>{{pizza.ingrediente}}</span>
@@ -30,8 +34,14 @@
         <div class="bebidas-cardapio">
             {% for bebida in bebidas %}
                 <div class="bebida">
-                    <div><img src="{{bebida.imagem.url}}" class="imagem-cardapio"></div>
-                    <button class="btn_pedido">PEÇA POR R$ {{bebida.preco}} </button>
+                    <div>
+                        {% if bebida.imagem %}
+                            <img src="{{bebida.imagem.url}}" class="imagem-cardapio">
+                        {% else %}
+                            <img class="imagem-cardapio" src="https://colorindo.org/wp-content/uploads/2021/10/simples-para-imprimir.jpg">
+                        {% endif %}
+                    </div>
+                    <button class="btn_pedido">PEÇA AGORA</button>
                     <p>{{bebida.nome}}</p>
                 </div>
             {% endfor %}

@@ -1,4 +1,28 @@
 from django.db import models
+    
+class Sabor(models.Model):
+    nome = models.CharField(max_length=50, unique=True)
+    imagem = models.ImageField(null=True)
+
+    def __str__(self) -> str:
+        return f"Nome: {self.nome}"
+
+    def __repr__(self) -> str:
+        return str(self)
+    
+class Ingrediente(models.Model):
+    nome = models.CharField(max_length=50, unique=True)
+
+    def __str__(self) -> str:
+        return f"Nome: {self.nome}"
+
+    def __repr__(self) -> str:
+        return str(self)
+
+# conecta sabores a ingredientes (relação N por N)
+class Composicao(models.Model):
+    fk_sabor = models.ForeignKey(Sabor, on_delete=models.CASCADE)
+    fk_ingrediente = models.ForeignKey(Ingrediente, on_delete=models.CASCADE)
 
 class Tamanho(models.Model):
     GIGANTE = "gigante"
@@ -18,34 +42,31 @@ class Tamanho(models.Model):
 
     def __repr__(self) -> str:
         return str(self)
-    
+
 class Pizza(models.Model):
-    nome = models.CharField(max_length=50, unique=True)
+    nome = models.CharField(max_length=50)
     preco = models.DecimalField(max_digits=5, decimal_places=2)
-    imagem = models.ImageField(null=True)
     tamanho = models.ForeignKey(Tamanho, on_delete=models.CASCADE)
-    outro_sabor = models.ForeignKey("Pizza", on_delete=models.CASCADE, null=True, blank=True)
+    sabor = models.ForeignKey(Sabor, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f"Nome: {self.nome} Preço: R${self.preco} Tamanho: {self.tamanho.tamanho}"
 
     def __repr__(self) -> str:
         return str(self)
-
-
-class Ingrediente(models.Model):
-    nome = models.CharField(max_length=50, unique=True)
+    
+class Pizza2Sabores(models.Model):
+    nome = models.CharField(max_length=100)
+    preco = models.DecimalField(max_digits=5, decimal_places=2)
+    tamanho = models.ForeignKey(Tamanho, on_delete=models.CASCADE)
+    primeiro_sabor = models.ForeignKey(Sabor, on_delete=models.CASCADE, related_name="primeiro_sabor")
+    segundo_sabor = models.ForeignKey(Sabor, on_delete=models.CASCADE, related_name="segundo_sabor")
 
     def __str__(self) -> str:
-        return f"Nome: {self.nome}"
+        return f"Nome: {self.nome} Preço: R${self.preco} Tamanho: {self.tamanho.tamanho}"
 
     def __repr__(self) -> str:
         return str(self)
-
-# conecta pizzas a ingredientes (relação N por N)
-class composicao(models.Model):
-    fk_pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
-    fk_ingredientes = models.ForeignKey(Ingrediente, on_delete=models.CASCADE)
 
 class TipoBebida(models.Model):
     REFRIGERANTE = "Refrigerante"
@@ -68,7 +89,7 @@ class TipoBebida(models.Model):
 
 class Bebida(models.Model):
     nome = models.CharField(max_length=50, unique=True)
-    imagem = models.ImageField(upload_to="media/imagens/", null=True)
+    imagem = models.ImageField(null=True)
     preco = models.DecimalField(max_digits=5, decimal_places=2)
     tipo = models.ForeignKey(TipoBebida, on_delete=models.CASCADE)
 
@@ -81,13 +102,17 @@ class Bebida(models.Model):
 class Combo(models.Model):
     descricao = models.CharField(max_length=100, unique=True)
     preco = models.DecimalField(max_digits=5, decimal_places=2)
+    fk_pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, null=True)
+    fk_bebida = models.ForeignKey(Bebida, on_delete=models.CASCADE, null=True)
 
 class Pedido(models.Model):
     codigo = models.CharField(max_length=10, unique=True)
     data = models.DateTimeField()
     total = models.DecimalField(max_digits=8, decimal_places=2)
-    fk_pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
-    fk_bebida = models.ForeignKey(Bebida, on_delete=models.CASCADE)
+    fk_pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, null=True)
+    fk_pizza_2_sabores = models.ForeignKey(Pizza2Sabores, on_delete=models.CASCADE, null=True)
+    fk_bebida = models.ForeignKey(Bebida, on_delete=models.CASCADE, null=True)
+    fk_combo = models.ForeignKey(Combo, on_delete=models.CASCADE, null=True)
 
     def __str__(self) -> str:
         return f"Código: {self.codigo} Data: {self.data} Total: R${self.total}"
@@ -96,7 +121,7 @@ class Pedido(models.Model):
         return str(self)
 
 class Bairro(models.Model):
-    nome = models.CharField(max_length=50)
+    nome = models.CharField(max_length=50, unique=True)
 
     def __str__(self) -> str:
         return f"Nome: {self.nome}"
