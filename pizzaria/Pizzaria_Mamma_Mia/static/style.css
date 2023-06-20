@@ -168,13 +168,21 @@ h1{
     text-align: center;
 }
 
-.cadastro-contain p{
+.cadastro-contain h3{
     background-color: var(--my_blue);
     color: white;
     font-weight: bold;
     margin: 40px 0 0 0;
     padding: 10px 10px;
     border-radius: 5px 5px 0 0;
+}
+
+.cadastro-contain p{
+    background-color: var(--my_blue);
+    color: white;
+    font-weight: bold;
+    margin: 20px 0;
+    padding: 10px 10px;
 }
 
 .cadastro-contain form{

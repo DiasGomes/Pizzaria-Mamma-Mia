@@ -28,7 +28,10 @@ class Cardapio(View):
 # tela de cadastro
 class Cadastro(View):
     def get(self, request):
-        return render(request, "cadastro.html")
+        data = {
+            "bairros": list(Bairro.objects.all().order_by("nome"))
+        }
+        return render(request, "cadastro.html", data)
 
 # ação de cadastro dos usuários no BD
 def store(request):
@@ -38,16 +41,14 @@ def store(request):
         data['msg'] = "senhas diferentes"
         data["class"] = "alert-danger"
     # verifica se os campos estão preenchidos
-    elif request.POST['user'] == "" or request.POST['email'] == "" or request.POST['password'] == "" or request.POST['first_name'] == "" or request.POST['last_name'] == "":
+    elif campoVazio(request):
         data['msg'] = "campo(s) vazio(s)"
         data["class"] = "alert-danger"
     # cadastra usuário
     else:
         try:
-            user = User.objects.create_user(request.POST['user'], request.POST['email'], request.POST['password'])
-            user.first_name = request.POST['first_name']
-            user.last_name = request.POST['last_name']
-            user.save()
+            cadastrarUser(request)
+            # mensagem
             data['msg'] = "Cadastrado com Sucesso"
             data["class"] = "alert-sucess"
         except:
@@ -58,6 +59,41 @@ def store(request):
 """
 FUNÇÕES AUXILIARES
 """
+def cadastrarUser(request):
+    # cria o usuário
+    user = User.objects.create_user(request.POST['user'], request.POST['email'], request.POST['password'])
+    user.first_name = request.POST['first_name']
+    user.last_name = request.POST['last_name']
+    user.save()
+
+    # cria o endereço
+    _bairro = Bairro.objects.get(id=request.POST['bairro'])
+    _endereco = Endereco.objects.create(
+        rua = request.POST['rua'],
+        numero = request.POST['numero'],
+        complemento = request.POST['complemento'],
+        CEP = request.POST['cep'],
+        fk_bairro = _bairro
+    )
+    _endereco.save()
+
+    # cria o cliente
+    cliente = Cliente.objects.create(
+        telefone = request.POST['telefone'],
+        fk_endereco = _endereco,
+        fk_user = user
+    )
+    cliente.save()
+
+
+
+def campoVazio(request):
+    campos = ["user", "email", "password", "first_name", "last_name", "telefone", "bairro", "rua", "cep", "numero"]
+    for campo in campos:
+        if request.POST[campo] == "":
+            return True
+    return False
+
 def dadosSabores():    
     lst_sabores = Sabor.objects.all().values("id", "nome", "imagem", "composicao__fk_ingrediente__nome")
     out = []

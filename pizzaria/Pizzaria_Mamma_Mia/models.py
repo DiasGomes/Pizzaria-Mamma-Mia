@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
     
 class Sabor(models.Model):
     nome = models.CharField(max_length=50, unique=True)
@@ -143,10 +144,10 @@ class Endereco(models.Model):
         return str(self)
     
 class Cliente(models.Model):
-    nome = models.CharField(max_length=50)
-    telefone = models.CharField(max_length=13, unique=True)
-    fk_pedidos = models.ForeignKey(Pedido, on_delete=models.CASCADE)
+    telefone = models.CharField(max_length=13)
+    fk_pedidos = models.ForeignKey(Pedido, on_delete=models.CASCADE, null=True)
     fk_endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE)
+    fk_user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f"Nome: {self.nome} Telefone: {self.telefone}"

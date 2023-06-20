@@ -2,16 +2,28 @@
 {% load static %}
 {% block conteudo %}
 <div class="cadastro-contain">
-    <p>CADASTRO</p>
+    <h3>CADASTRO</h3>
     <form name="form-cadastro" id="form-cadastro" method="post" action="{% url 'store' %}">
         <div class="col-6 mt-4 m-auto">    
             {% csrf_token %}
-            <input class="form-control mt-4" type="text" name="first_name" id="first_name" placeholder="Primeiro Nome:"><br>
-            <input class="form-control mt-4" type="text" name="last_name" id="last_name" placeholder="Sobrenome:"><br>
-            <input class="form-control mt-4" type="text" name="user" id="user" placeholder="Usuário:"><br>
-            <input class="form-control mt-4" type="password" name="password" id="senha" placeholder="Senha:"><br>
-            <input class="form-control mt-4" type="password" name="password-conf" id="senha-conf" placeholder="Confirme a Senha:"><br>
-            <input class="form-control mt-4" type="text" name="email" id="email" placeholder="Email:"><br>
+            <input class="form-control mt-4" type="text" name="first_name" id="first_name" placeholder="*Primeiro Nome:"><br>
+            <input class="form-control mt-4" type="text" name="last_name" id="last_name" placeholder="*Sobrenome:"><br>
+            <input class="form-control mt-4" type="text" name="telefone" id="telefone" placeholder="*Telefone:"><br>
+            <input class="form-control mt-4" type="text" name="user" id="user" placeholder="*CPF:"><br>
+            <input class="form-control mt-4" type="text" name="email" id="email" placeholder="*Email:"><br>
+            <input class="form-control mt-4" type="password" name="password" id="senha" placeholder="*Senha:"><br>
+            <input class="form-control mt-4" type="password" name="password-conf" id="senha-conf" placeholder="*Confirme a Senha:"><br>     
+            <p>Endereço</p>
+            <select name='bairro' class='form-control'>
+                <option value="">*Bairro</option>
+                    {% for bairro in bairros %}
+                    <option value="{{bairro.id}}">{{bairro.nome}}</option>
+                    {% endfor %}
+            </select>
+            <input class="form-control mt-4" type="text" name="cep" id="cep" placeholder="*CEP:"><br>
+            <input class="form-control mt-4" type="text" name="rua" id="rua" placeholder="*Rua:"><br>
+            <input class="form-control mt-4" type="text" name="numero" id="numero" placeholder="*Número:"><br>
+            <input class="form-control mt-4" type="text" name="complemento" id="complemento" placeholder="Complemento:"><br>
             <input class="btn btnprimary mt-4" type="submit" value="Cadastrar"><br>
             {% if msg %}
                 <div class="alert {{class}}">
