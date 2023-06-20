@@ -9,6 +9,6 @@ urlpatterns = [
     path("cardapio/", Cardapio.as_view(), name="cardapio"),
     path("login/", Login.as_view(), name="login"),
     path('admin/', admin.site.urls),
-    path('cadastro/', cadastro, name="cadastrar"),
-    path('store/', store),
+    path('cadastro/', Cadastro.as_view(), name="cadastrar"),
+    path('store/', store, name="store"),
 ] + static (settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

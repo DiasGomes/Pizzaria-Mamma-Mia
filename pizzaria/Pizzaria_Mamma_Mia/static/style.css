@@ -159,3 +159,40 @@ h1{
     display:inline-block;
     border-bottom: 0;
 }
+
+.cadastro-contain{
+    width: 20%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.cadastro-contain p{
+    background-color: var(--my_blue);
+    color: white;
+    font-weight: bold;
+    margin: 40px 0 0 0;
+    padding: 10px 10px;
+    border-radius: 5px 5px 0 0;
+}
+
+.cadastro-contain form{
+    background-color: #d9d9d9;
+    padding: 20px 0;
+    border-radius: 0 0 5px 5px;
+}
+
+.form-control{
+    margin-bottom: 10px;
+}
+
+.alert.alert-danger{
+    color: red;
+    margin: 10px 0;
+}
+
+.alert.sucess{
+    color: green;
+    margin: 10px 0;
+}

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.views import View
 from Pizzaria_Mamma_Mia.models import *
@@ -23,12 +24,36 @@ class Cardapio(View):
             "sabores": dadosSabores(),
         }
         return render(request, "cardapio.html", context) 
-    
-def cadastro(request):
-    return render(request, "create.html")
 
+# tela de cadastro
+class Cadastro(View):
+    def get(self, request):
+        return render(request, "cadastro.html")
+
+# ação de cadastro dos usuários no BD
 def store(request):
-    return render(request, "home.html")
+    data = {}
+    # verifica a confirmação da senha
+    if request.POST["password"] != request.POST["password-conf"]:
+        data['msg'] = "senhas diferentes"
+        data["class"] = "alert-danger"
+    # verifica se os campos estão preenchidos
+    elif request.POST['user'] == "" or request.POST['email'] == "" or request.POST['password'] == "" or request.POST['first_name'] == "" or request.POST['last_name'] == "":
+        data['msg'] = "campo(s) vazio(s)"
+        data["class"] = "alert-danger"
+    # cadastra usuário
+    else:
+        try:
+            user = User.objects.create_user(request.POST['user'], request.POST['email'], request.POST['password'])
+            user.first_name = request.POST['first_name']
+            user.last_name = request.POST['last_name']
+            user.save()
+            data['msg'] = "Cadastrado com Sucesso"
+            data["class"] = "alert-sucess"
+        except:
+            data['msg'] = "Usúario já existente"
+            data["class"] = "alert-danger"
+    return render(request, "cadastro.html", data)
     
 """
 FUNÇÕES AUXILIARES
