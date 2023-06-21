@@ -1,5 +1,21 @@
 {% extends "index.html" %}
 {% load static %}
 {% block conteudo %}
-<a href="{% url 'cadastrar' %}">Cadastrar</a>
+<div class="cadastro-contain">
+    <h3>LOGIN</h3>
+    <form name="form-login" id="form-login" method="post" action="{% url 'dologin' %}">
+        <div class="col-6 mt-4 m-auto">    
+            {% csrf_token %}
+            <input class="form-control mt-4" type="text" name="user" id="user" placeholder="CPF:"><br>
+            <input class="form-control mt-4" type="password" name="password" id="senha" placeholder="Senha:"><br>
+            <input class="btn-form" type="submit" value="Entrar"><br>
+            <a class="go-to-cadastrar" href="{% url 'cadastrar' %}">Cadastrar</a>
+            {% if msg %}
+                <div class="alert {{class}}">
+                    {{msg}}
+                </div>
+            {% endif %}
+        </div>
+    </form>
+</div>
 {% endblock %}

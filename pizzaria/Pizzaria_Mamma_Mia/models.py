@@ -138,7 +138,7 @@ class Endereco(models.Model):
     fk_bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f"Bairro: {self.bairro} Rua: {self.rua}"
+        return f"Rua: {self.rua} numero: {self.numero} complemento: {self.complemento} CEP: {self.CEP}"
 
     def __repr__(self) -> str:
         return str(self)
@@ -150,7 +150,7 @@ class Cliente(models.Model):
     fk_user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f"Nome: {self.nome} Telefone: {self.telefone}"
+        return f"Telefone: {self.telefone}"
 
     def __repr__(self) -> str:
         return str(self)

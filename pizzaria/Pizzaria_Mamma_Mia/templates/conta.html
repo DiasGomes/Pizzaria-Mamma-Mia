@@ -1,0 +1,49 @@
+{% extends "index.html" %}
+{% load static %}
+{% block conteudo %}
+<div>
+    <h3>Conta</h3>
+    <a class="go-to-cadastrar" href="{% url 'dologout' %}">Logout</a>
+    <h3>EDITAR</h3>
+    <div>
+        <h3>Usuário</h3>
+        <p>Nome: {{conta.user.first_name}} {{conta.user.last_name}}</p>
+        <p>Email: {{conta.user.email}}</p>
+        <p>Telefone: {{conta.telefone.telefone}}</p>
+        <h3>Endereço</h3>
+        <p>{{conta.bairro.nome}}, {{conta.endereco.rua}}, {{conta.endereco.numero}} ({{conta.endereco.complemento}}) </p>
+        <p>CEP: {{conta.endereco.CEP}}</p>
+    </div>
+    <div class="cadastro-contain">
+        <h3>Usuário</h3>
+        <form name="form-editar" id="form-cadastro" method="post" action="{% url 'editar-conta' %}">
+            <div class="col-6 mt-4 m-auto">    
+                {% csrf_token %}
+                <input class="form-control mt-4" type="text" name="first_name" id="first_name" placeholder="Primeiro Nome:"><br>
+                <input class="form-control mt-4" type="text" name="last_name" id="last_name" placeholder="Sobrenome:"><br>
+                <input class="form-control mt-4" type="text" name="telefone" id="telefone" placeholder="Telefone:"><br>
+                <input class="form-control mt-4" type="text" name="email" id="email" placeholder="Email:"><br>
+                <input class="form-control mt-4" type="password" name="password" id="senha" placeholder="Senha:"><br>
+                <input class="form-control mt-4" type="password" name="password-conf" id="senha-conf" placeholder="Confirme a Senha:"><br>     
+                <p>Endereço</p>
+                <select name='bairro' class='form-control'>
+                    <option value="">*Bairro</option>
+                        {% for bairro in bairros %}
+                        <option value="{{bairro.id}}">{{bairro.nome}}</option>
+                        {% endfor %}
+                </select>
+                <input class="form-control mt-4" type="text" name="cep" id="cep" placeholder="CEP:"><br>
+                <input class="form-control mt-4" type="text" name="rua" id="rua" placeholder="Rua:"><br>
+                <input class="form-control mt-4" type="text" name="numero" id="numero" placeholder="Número:"><br>
+                <input class="form-control mt-4" type="text" name="complemento" id="complemento" placeholder="Complemento:"><br>
+                <input class="btn btnprimary mt-4" type="submit" value="Cadastrar"><br>
+                {% if msg %}
+                    <div class="alert {{class}}">
+                        {{msg}}
+                    </div>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

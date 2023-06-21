@@ -200,7 +200,21 @@ h1{
     margin: 10px 0;
 }
 
-.alert.sucess{
+.alert.alert-sucess{
     color: green;
     margin: 10px 0;
+}
+
+.btn-form{
+    color: white;
+    background-color: var(--my_blue);
+    padding: 5px 5px;
+    margin-bottom: 20px;
+}
+
+.go-to-cadastrar{
+    text-decoration: None;
+    color: white;
+    background-color: var(--my_blue);
+    padding: 5px 5px;
 }
