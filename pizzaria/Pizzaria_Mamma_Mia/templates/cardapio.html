@@ -18,7 +18,7 @@
                     {% else %}
                         <img class="imagem-cardapio" src="https://www.tudodesenhos.com/uploads/images/4973/pizza-inteira.jpg">
                     {% endif %}
-                    <button class="btn_pedido">PEÇA AGORA</button>
+                    <button value="{{pizza.id}}" class="btn_pedido">PEÇA AGORA</button>
                     <p>{{pizza.nome}}</p>
                     <p>
                         {% for ingrediente in pizza.ingredientes %}
@@ -41,7 +41,7 @@
                             <img class="imagem-cardapio" src="https://colorindo.org/wp-content/uploads/2021/10/simples-para-imprimir.jpg">
                         {% endif %}
                     </div>
-                    <button class="btn_pedido">PEÇA AGORA</button>
+                    <button value="{{bebida.id}}" class="btn_pedido">PEÇA AGORA</button>
                     <p>{{bebida.nome}}</p>
                 </div>
             {% endfor %}
@@ -49,30 +49,6 @@
     </div>
 </div>
 
-<script>
-    function openTab(tabId, abaId) {
-      // Esconder todo o conteúdo das abas
-      var tabContents = document.getElementsByClassName('tab-content');
-      for (var i = 0; i < tabContents.length; i++) {
-        tabContents[i].classList.remove('active');
-      }
-      
-      // Mostrar o conteúdo da aba selecionada
-      var selectedTab = document.getElementById(tabId);
-      selectedTab.classList.add('active');
-
-      // Esconder todo o conteúdo das abas
-      var tabContents = document.getElementsByClassName('aba-option');
-      for (var i = 0; i < tabContents.length; i++) {
-        tabContents[i].classList.remove('active');
-      }
-      
-      // Mostrar o conteúdo da aba selecionada
-      var selectedTab = document.getElementById(abaId);
-      selectedTab.classList.add('active');
-
-    }
-</script>
-
+<script src="{% static 'cardapio.js' %}"></script>
 
 {% endblock %}

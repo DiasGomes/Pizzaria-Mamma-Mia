@@ -99,6 +99,7 @@ def dadosSabores():
             lst_id.append(obj['id'])
             out.append(
                 {
+                    'id': obj['id'],
                     'nome': obj['nome'],
                     'imagem': obj['imagem'],
                     'ingredientes': [obj['composicao__fk_ingrediente__nome']]
@@ -129,4 +130,13 @@ def showMsg(request):
         request.session["msg"] = None
         request.session["class"] = None
     return {"msg": msg, "class": _class}
+
+def showItensCarrinho(request):
+    cart = {
+        "num_of_items": 0
+    }
+    if request.user.is_authenticated:
+        cart, created = Pedido.objects.get_or_create(user=request.user, completed=False)
+        
+    return {"cart": cart}
 

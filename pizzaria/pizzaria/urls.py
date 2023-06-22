@@ -18,4 +18,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('cadastro/', Cadastro.as_view(), name="cadastrar"),
     path('store/', store, name="store"),
+    path("cardapio/add_to_cart/", add_to_cart, name="add_to_cart")
 ] + static (settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
