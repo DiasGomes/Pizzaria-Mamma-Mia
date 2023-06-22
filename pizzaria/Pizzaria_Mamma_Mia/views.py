@@ -11,9 +11,7 @@ CLASSES
 # tela do home
 class Home(View):
     def get(self, request):
-        context = {
-            
-        }
+        context = {}
         return render(request, "home.html", context)
 
 # tela que exibe os cárdapios(Pizzas e bebibas)
@@ -37,87 +35,68 @@ class Combo(View):
 class Login(View):
     def get(self, request):
         # mensagens de confirmação e erro
-        msg=None
-        _class=None
-        if 'msg' in request.session:
-            msg = request.session['msg']
-            _class = request.session['class']
-            request.session["msg"] = None
-            request.session["class"] = None
-        return render(request, "login.html", {"msg": msg, "class": _class})
+        msg=showMsg(request)
+        return render(request, "login.html", msg)
 
 # tela do perfil/conta do usuário  
 class Conta(View):
     def get(self, request):
+        # acesso somente para usuário autenticado
         if request.user.is_authenticated:
             # conteudo
-            user = User.objects.all().get(email=request.user.email)
-            cliente = Cliente.objects.all().get(fk_user=user.id)
-            endereco = Endereco.objects.all().get(id=cliente.fk_endereco.id)
-            bairro = Bairro.objects.all().get(id=endereco.fk_bairro.id)
-            conta = {
-                "user": user,
-                "telefone": cliente,
-                "endereco": endereco,
-                "bairro": bairro,
-            }
+            conta = dadosConta(request)
 
             # mensagens de confirmação e erro
-            msg=None
-            _class=None
-            if 'msg' in request.session:
-                msg = request.session['msg']
-                _class = request.session['class']
-                request.session["msg"] = None
-                request.session["class"] = None
+            msg=showMsg(request)
 
             # retorna conteudo
             context = {
                 "conta": conta,
                 "bairros": list(Bairro.objects.all().order_by("nome")),
-                "msg": msg,
-                "class": _class,
             }
+
+            # concatena dicionários
+            context.update(msg)
+
             return render(request, "conta.html", context) 
         else:
-            return render(request, "login.html") 
+            return redirect('login') 
 
 # tela de cadastro
 class Cadastro(View):
     def get(self, request):
         # mensagens de confirmação e erro
-        msg=None
-        _class=None
-        if 'msg' in request.session:
-            msg = request.session['msg']
-            _class = request.session['class']
-            request.session["msg"] = None
-            request.session["class"] = None
+        msg=showMsg(request)
 
-        data = {
+        # retorna bairros
+        context = {
             "bairros": list(Bairro.objects.all().order_by("nome")),
-            "msg": msg,
-            "class": _class,
         }
-        return render(request, "cadastro.html", data)
+
+        # concatena dicionários
+        context.update(msg)
+
+        return render(request, "cadastro.html", context)
 
 # tela da compra
 class Compra(View):
     def get(self, request):
+        # acesso somente para usuário autenticado
         if request.user.is_authenticated:
             context = {}
             return render(request, "compra.html", context) 
         else:
-            return render(request, "login.html") 
+            return redirect('login')  
 
 # tela do carrinho 
 class Carrinho(View):
     def get(self, request):
+        # acesso somente para usuário autenticado
         if request.user.is_authenticated:
             context = {}
             return render(request, "carrinho.html", context) 
         else:
-            return render(request, "login.html") 
+            return redirect('login') 
 
 
 """

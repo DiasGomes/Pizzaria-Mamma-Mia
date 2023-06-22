@@ -106,3 +106,27 @@ def dadosSabores():
             )
     return out
 
+# mostra dados da conta do usuário
+def dadosConta(request):
+    user = User.objects.all().get(email=request.user.email)
+    cliente = Cliente.objects.all().get(fk_user=user.id)
+    endereco = Endereco.objects.all().get(id=cliente.fk_endereco.id)
+    bairro = Bairro.objects.all().get(id=endereco.fk_bairro.id)
+    return {
+        "user": user,
+        "telefone": cliente,
+        "endereco": endereco,
+        "bairro": bairro,
+    }
+
+# mostra menssagens de alerta e confirmação
+def showMsg(request):
+    msg=None
+    _class=None
+    if 'msg' in request.session:
+        msg = request.session['msg']
+        _class = request.session['class']
+        request.session["msg"] = None
+        request.session["class"] = None
+    return {"msg": msg, "class": _class}
+
