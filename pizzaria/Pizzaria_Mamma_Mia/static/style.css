@@ -93,14 +93,14 @@ h1{
     height: 30px;
 }
 
-.bebidas-cardapio, .pizzas-cardapio{
+.bebidas-cardapio, .pizzas-cardapio, .combos-cardapio{
     text-align: center;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
 }
 
-.bebida, .pizzas{
+.bebida, .pizzas, .combo{
     margin: 20px 0;
     width: 33%;
 }

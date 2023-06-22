@@ -3,5 +3,10 @@
 {% block conteudo %}
 <div>
     <h3>Carrinho</h3>
+    {% for item in itens %}
+        <p>{{item.nome}} ({{item.qtd}})</p>
+    {% endfor %}
+    <p>R${{total}}</p>
+    <button>Pagar</button>
 </div>
 {% endblock %}

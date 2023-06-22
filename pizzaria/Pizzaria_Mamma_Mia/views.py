@@ -14,7 +14,7 @@ CLASSES
 # tela do home
 class Home(View):
     def get(self, request):
-        context = showItensCarrinho(request)
+        context = showQtdItensCarrinho(request)
         return render(request, "home.html", context)
 
 # tela que exibe os cárdapios(Pizzas e bebibas)
@@ -23,21 +23,12 @@ class Cardapio(View):
         context = {
             "bebidas": list(Bebida.objects.all()),
             "sabores": dadosSabores(),
-        }
-        # concatena informações do carrinho
-        context.update(showItensCarrinho(request))
-        return render(request, "cardapio.html", context) 
-
-# tela que exibe os combos
-class Combo(View):
-    def get(self, request):
-        context = {
             "combos": [],
+            "tamanhos": list(Tamanho.objects.all())
         }
-
         # concatena informações do carrinho
-        context.update(showItensCarrinho(request))
-        return render(request, "combo.html", context) 
+        context.update(showQtdItensCarrinho(request))
+        return render(request, "cardapio.html", context) 
     
 # tela de login
 class Login(View):
@@ -45,7 +36,7 @@ class Login(View):
         # mensagens de confirmação e erro
         context=showMsg(request)
         # concatena informações do carrinho
-        context.update(showItensCarrinho(request))
+        context.update(showQtdItensCarrinho(request))
         return render(request, "login.html", context)
 
 # tela do perfil/conta do usuário  
@@ -68,7 +59,7 @@ class Conta(View):
             # concatena dicionários
             context.update(msg)
             # concatena informações do carrinho
-            context.update(showItensCarrinho(request))
+            context.update(showQtdItensCarrinho(request))
             return render(request, "conta.html", context) 
         else:
             return redirect('login') 
@@ -86,7 +77,7 @@ class Cadastro(View):
 
         # concatena dicionários
         context.update(msg)
-        context.update(showItensCarrinho(request))
+        context.update(showQtdItensCarrinho(request))
 
         return render(request, "cadastro.html", context)
 
@@ -95,17 +86,18 @@ class Compra(View):
     def get(self, request):
         # acesso somente para usuário autenticado
         if request.user.is_authenticated:
-            context = showItensCarrinho(request)
+            context = showQtdItensCarrinho(request)
             return render(request, "compra.html", context) 
         else:
             return redirect('login')  
 
 # tela do carrinho 
-class Carrinho(View):
+class CarrinhoView(View):
     def get(self, request):
         # acesso somente para usuário autenticado
         if request.user.is_authenticated:
             context = showItensCarrinho(request)
+            context.update(showQtdItensCarrinho(request))
             return render(request, "carrinho.html", context) 
         else:
             return redirect('login') 
@@ -180,11 +172,23 @@ def add_to_cart(request):
     product_nome = data["nome"]
     print(product_id)
     print(product_nome)
+    print(Carrinho.objects.all())
     num_of_item = 0
     if product_nome == "pizza":
         num_of_item = -1
     elif product_nome == "bebida":
         num_of_item = -2
+        if request.user.is_authenticated:
+            item = Bebida.objects.get(id=product_id)
+            cart, created = Carrinho.objects.get_or_create(user=request.user, completo=False)
+            cartitem, created = PedidoBebida.objects.get_or_create(cart=cart, item=item)
+            cartitem.quantidade += 1
+            cartitem.save()
+            
+            print(cartitem)
+            num_of_item = cart.quantidade_total
+            
+            print(num_of_item)
     """
     product = Bebida.objects.get(id=product_id)
     num_of_item = {"cart": 0}

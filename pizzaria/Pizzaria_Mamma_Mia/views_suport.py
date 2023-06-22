@@ -131,12 +131,54 @@ def showMsg(request):
         request.session["class"] = None
     return {"msg": msg, "class": _class}
 
-def showItensCarrinho(request):
+# mostra quantos itens estão do carrinho no icone do carrinho
+def showQtdItensCarrinho(request):
     cart = {
         "num_of_items": 0
     }
     if request.user.is_authenticated:
-        cart, created = Pedido.objects.get_or_create(user=request.user, completed=False)
+        cart_user, created = Carrinho.objects.get_or_create(user=request.user, completo=False)
+        cart['num_of_items'] = cart_user.quantidade_total
         
     return {"cart": cart}
+
+# mostra os produtos que estão no carrinho
+def showItensCarrinho(request):
+    lst_itens = []
+    total = None
+
+    # pega o usuário
+    if request.user.is_authenticated:
+        cart_user, created = Carrinho.objects.get_or_create(user=1, completo=False)
+        total = cart_user.preco_total
+
+        # adiciona as bebidas ao carrinho
+        for item in list(cart_user.cartBebidas.all()):
+            lst_itens.append({
+                "nome": item.item.nome,
+                "qtd": item.quantidade,
+            })
+
+        # adiciona as pizzas
+        for item in list(cart_user.cartPizzas.all()):
+            lst_itens.append({
+                "nome": item.item.nome,
+                "qtd": item.quantidade,
+            })
+
+        # adiciona as pizzas 2 sabores
+        for item in list(cart_user.cartPizza2Sabores.all()):
+            lst_itens.append({
+                "nome": item.item.nome,
+                "qtd": item.quantidade,
+            })
+
+        # adiciona os combos
+        for item in list(cart_user.cartCombos.all()):
+            lst_itens.append({
+                "nome": item.item.descricao,
+                "qtd": item.quantidade,
+            })
+        
+    return {"itens": lst_itens, "total": total}
 

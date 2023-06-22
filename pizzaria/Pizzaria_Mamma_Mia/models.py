@@ -106,21 +106,6 @@ class Combo(models.Model):
     fk_pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, null=True)
     fk_bebida = models.ForeignKey(Bebida, on_delete=models.CASCADE, null=True)
 
-class Pedido(models.Model):
-    codigo = models.CharField(max_length=10, unique=True)
-    data = models.DateTimeField()
-    total = models.DecimalField(max_digits=8, decimal_places=2)
-    fk_pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, null=True)
-    fk_pizza_2_sabores = models.ForeignKey(Pizza2Sabores, on_delete=models.CASCADE, null=True)
-    fk_bebida = models.ForeignKey(Bebida, on_delete=models.CASCADE, null=True)
-    fk_combo = models.ForeignKey(Combo, on_delete=models.CASCADE, null=True)
-
-    def __str__(self) -> str:
-        return f"Código: {self.codigo} Data: {self.data} Total: R${self.total}"
-
-    def __repr__(self) -> str:
-        return str(self)
-
 class Bairro(models.Model):
     nome = models.CharField(max_length=50, unique=True)
 
@@ -145,7 +130,6 @@ class Endereco(models.Model):
     
 class Cliente(models.Model):
     telefone = models.CharField(max_length=13)
-    fk_pedidos = models.ForeignKey(Pedido, on_delete=models.CASCADE, null=True)
     fk_endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE)
     fk_user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -154,3 +138,95 @@ class Cliente(models.Model):
 
     def __repr__(self) -> str:
         return str(self)
+    
+class Carrinho(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    completo = models.BooleanField(default=False)
+    
+    @property
+    def quantidade_total(self):
+        cartPizzas = self.cartPizzas.all()
+        cartBebidas = self.cartBebidas.all()
+        cartPizza2Sabores = self.cartPizza2Sabores.all()
+        cartCombos = self.cartCombos.all()
+        quantidade = 0
+        quantidade += sum([item.quantidade for item in cartPizzas])
+        quantidade += sum([item.quantidade for item in cartBebidas])
+        quantidade += sum([item.preco for item in cartCombos])
+        quantidade += sum([item.preco for item in cartPizza2Sabores])
+        return quantidade
+    
+    @property
+    def preco_total(self):
+        cartPizzas = self.cartPizzas.all()
+        cartBebidas = self.cartBebidas.all()
+        cartPizza2Sabores = self.cartPizza2Sabores.all()
+        cartCombos = self.cartCombos.all()
+        total = 0
+        total += sum([item.preco for item in cartPizzas])
+        total += sum([item.preco for item in cartBebidas])
+        total += sum([item.preco for item in cartCombos])
+        total += sum([item.preco for item in cartPizza2Sabores])
+        return total
+    
+    def __str__(self) -> str:
+        return f"{self.id} usuário: {self.user} {self.completo}"
+
+    def __repr__(self) -> str:
+        return str(self)
+    
+
+class PedidoPizza(models.Model):
+    item = models.ForeignKey(Pizza, on_delete=models.CASCADE, null=True)
+    cart = models.ForeignKey(Carrinho, on_delete= models.CASCADE, related_name="cartPizzas")
+    quantidade = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return self.item.nome
+    
+    @property
+    def preco(self):
+        novo_preco = self.item.preco * self.quantidade
+        return novo_preco
+    
+class PedidoBebida(models.Model):
+    item = models.ForeignKey(Bebida, on_delete=models.CASCADE, null=True)
+    cart = models.ForeignKey(Carrinho, on_delete= models.CASCADE, related_name="cartBebidas")
+    quantidade = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return self.item.nome
+    
+    @property
+    def preco(self):
+        novo_preco = self.item.preco * self.quantidade
+        return novo_preco
+    
+class PedidoCombo(models.Model):
+    item = models.ForeignKey(Combo, on_delete=models.CASCADE, null=True)
+    cart = models.ForeignKey(Carrinho, on_delete= models.CASCADE, related_name="cartCombos")
+    quantidade = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return self.item.descricao
+    
+    @property
+    def preco(self):
+        novo_preco = self.item.preco * self.quantidade
+        return novo_preco
+    
+class PedidoPizza2Sabores(models.Model):
+    item = models.ForeignKey(Pizza2Sabores, on_delete=models.CASCADE, null=True)
+    cart = models.ForeignKey(Carrinho, on_delete= models.CASCADE, related_name="cartPizza2Sabores")
+    quantidade = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return self.item.nome
+    
+    @property
+    def preco(self):
+        novo_preco = self.item.preco * self.quantidade
+        return novo_preco
+    
+
+

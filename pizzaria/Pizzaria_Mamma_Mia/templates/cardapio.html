@@ -4,12 +4,13 @@
 <ul class="aba">
 	<li><a  id="aba1" class="aba-option active" href="javascript:void(0);" onclick="openTab('tab1', 'aba1')">🍕 Pizzas</a></li>
 	<li><a  id="aba2" class="aba-option" href="javascript:void(0);" onclick="openTab('tab2', 'aba2')">🥤 Bebidas</a></li>
+    <li><a  id="aba3" class="aba-option" href="javascript:void(0);" onclick="openTab('tab3', 'aba3')">🍽️ Combos</a></li>
 </ul>
 <hr>
 
 <div class="cardapio">
     <div id="tab1" class="tab-content active">
-        <h2 class="titulo-cardapio">Pizzas</h2>
+        <h2 class="titulo-cardapio">PIZZAS</h2>
         <div class="pizzas-cardapio">
             {% for pizza in sabores %}
                 <div class="pizzas">
@@ -19,12 +20,22 @@
                         <img class="imagem-cardapio" src="https://www.tudodesenhos.com/uploads/images/4973/pizza-inteira.jpg">
                     {% endif %}
                     <button value="{{pizza.id}}" class="btn_pedido">PEÇA AGORA</button>
-                    <p>{{pizza.nome}}</p>
+
+                    <p>
+                        {{pizza.nome}} - 
+                        <select name='tamanho' class='form-control'>
+                            <option value="">Tamanho</option>
+                                {% for tamanho in tamanhos %}
+                                    <option value="{{tamanho.id}}">{{tamanho.tamanho}}</option>
+                                {% endfor %}
+                        </select>
+                    </p>
                     <p>
                         {% for ingrediente in pizza.ingredientes %}
-                            <span>{{pizza.ingrediente}}</span>
+                            <span>{{ingrediente}}; </span>
                         {% endfor %}
                     </p>
+
                 </div>
             {% endfor %}
         </div>
@@ -43,6 +54,24 @@
                     </div>
                     <button value="{{bebida.id}}" class="btn_pedido">PEÇA AGORA</button>
                     <p>{{bebida.nome}}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div id="tab3" class="tab-content">
+        <h2 class="titulo-cardapio">COMBOS</h2>
+        <div class="combos-cardapio">
+            {% for combo in combos %}
+                <div class="combo">
+                    <div>
+                        {% if combo.imagem %}
+                            <img src="{{combo.imagem.url}}" class="imagem-cardapio">
+                        {% else %}
+                            <img class="imagem-cardapio" src="https://colorindo.org/wp-content/uploads/2021/10/simples-para-imprimir.jpg">
+                        {% endif %}
+                    </div>
+                    <button value="{{combo.id}}" class="btn_pedido">PEÇA AGORA</button>
+                    <p>{{combo.descricao}}</p>
                 </div>
             {% endfor %}
         </div>

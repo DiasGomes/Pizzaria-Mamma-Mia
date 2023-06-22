@@ -7,9 +7,9 @@ from django.conf import settings
 urlpatterns = [
     path("", Home.as_view(), name="home"),
     path("cardapio/", Cardapio.as_view(), name="cardapio"),
-    path("combo/", Combo.as_view(), name="combo"),
+    path("cardapio/add_to_cart/", add_to_cart, name="add_to_cart"),
     path("compra/", Compra.as_view(), name="compra"),
-    path("carrinho/", Carrinho.as_view(), name="carrinho"),
+    path("carrinho/", CarrinhoView.as_view(), name="carrinho"),
     path("login/", Login.as_view(), name="login"),
     path("conta/", Conta.as_view(), name="conta"),
     path("editar-conta/", editarConta, name="editar-conta"),
@@ -18,5 +18,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('cadastro/', Cadastro.as_view(), name="cadastrar"),
     path('store/', store, name="store"),
-    path("cardapio/add_to_cart/", add_to_cart, name="add_to_cart")
 ] + static (settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
