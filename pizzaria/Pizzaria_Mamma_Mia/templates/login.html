@@ -2,7 +2,7 @@
 {% load static %}
 {% block conteudo %}
 <div class="cadastro-contain">
-    <h3>LOGIN</h3>
+    <h3 class="form-title">LOGIN</h3>
     <form name="form-login" id="form-login" method="post" action="{% url 'dologin' %}">
         <div class="col-6 mt-4 m-auto">    
             {% csrf_token %}
