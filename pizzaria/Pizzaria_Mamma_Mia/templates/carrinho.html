@@ -2,11 +2,36 @@
 {% load static %}
 {% block conteudo %}
 <div>
-    <h3>Carrinho</h3>
-    {% for item in itens %}
-        <p>{{item.nome}} ({{item.qtd}})</p>
-    {% endfor %}
-    <p>R${{total}}</p>
-    <button>Pagar</button>
+    <h3 id="carrinho-titulo">Carrinho</h3>
+    <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for item in itens %}
+            <tr>
+                <td>{{item.nome}}
+                    {% if item.tamanho%}
+                        ({{item.tamanho}})
+                    {% endif %}
+                </td>
+                <td>{{item.qtd}}</td>
+                <td>R${{item.preco}}</td>
+            </tr>
+        {% endfor %}
+          <tr class="total">
+            <td colspan="2">Total</td>
+            <td>R${{total}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="btn-pagar">
+        <a href="{% url 'cardapio' %}">Continuar comprando</a>
+        <button>Pagar</button>
+      </div>
 </div>
 {% endblock %}

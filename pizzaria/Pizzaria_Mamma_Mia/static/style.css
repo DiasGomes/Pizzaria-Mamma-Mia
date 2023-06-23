@@ -259,3 +259,62 @@ h1{
     margin-right: 5%;
     margin-top: 20px;
 }
+
+
+table {
+    border-collapse: collapse;
+    width: 50%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  tr.total {
+    font-weight: bold;
+  }
+  
+  tr.total td {
+    border-top: 2px solid #000;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  td {
+    background-color: #fff;
+  }
+  
+  td:nth-child(2),
+  td:nth-child(3) {
+    text-align: center;
+  }
+
+.btn-pagar{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-pagar button{
+    background-color: var(--my_blue);
+    color: white;
+    padding: 5px 5px;
+    margin-bottom: 20px;
+}
+
+.btn-pagar a{
+    background-color: var(--my_blue);
+    padding: 5px 5px;
+    color: white;
+    text-decoration: none;
+}
+
+#carrinho-titulo{
+    text-align: center;
+}

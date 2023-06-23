@@ -13,7 +13,11 @@
             </div>
             <h3 class="form-title">Endereço</h3>
             <div class="perfil-info">
-                <p>{{conta.bairro.nome}}, {{conta.endereco.rua}}, {{conta.endereco.numero}} ({{conta.endereco.complemento}}) </p>
+                <p>{{conta.bairro.nome}}, {{conta.endereco.rua}}, {{conta.endereco.numero}} 
+                    {% if conta.endereco.complemento %} 
+                        ({{conta.endereco.complemento}})
+                    {% endif %}   
+                </p>
                 <p>CEP: {{conta.endereco.CEP}}</p>
             </div>
         </div>

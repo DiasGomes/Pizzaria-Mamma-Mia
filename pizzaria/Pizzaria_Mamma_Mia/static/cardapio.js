@@ -43,10 +43,12 @@ pizzasbtns.forEach(btn=>{
 function addPizzaToCart(e){
     let product_id = e.target.value
     let url = "add_to_cart/"
-    console.log(product_id)
-    let data = {id:product_id, nome:"pizza"}
-
-    
+    let tamanho = document.getElementById("tamanho-pizza"+ product_id)
+    if(tamanho.value === null){
+        tamanho.value = 1
+    }
+    let data = {id:product_id, nome:"pizza", tamanho: tamanho.value}
+    console.log(product_id +" - " + tamanho.id + " - " +tamanho.value)
     addToCart(url , data)
     
 }

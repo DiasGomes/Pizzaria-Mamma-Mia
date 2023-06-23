@@ -170,38 +170,26 @@ def add_to_cart(request):
     data = json.loads(request.body)
     product_id = data["id"]
     product_nome = data["nome"]
-    print(product_id)
-    print(product_nome)
-    print(Carrinho.objects.all())
     num_of_item = 0
+    # adiciona pizzas ao carrinho
     if product_nome == "pizza":
-        num_of_item = -1
+        if request.user.is_authenticated:
+            tamanho = data["tamanho"]
+            item = Pizza.objects.get(sabor=product_id, tamanho=tamanho)
+            cart, created = Carrinho.objects.get_or_create(user=request.user, completo=False)
+            cartitem, created = PedidoPizza.objects.get_or_create(cart=cart, item=item)
+            cartitem.quantidade += 1
+            cartitem.save()
+            num_of_item = cart.quantidade_total
+    # adiciona bebidas ao carrinho
     elif product_nome == "bebida":
-        num_of_item = -2
         if request.user.is_authenticated:
             item = Bebida.objects.get(id=product_id)
             cart, created = Carrinho.objects.get_or_create(user=request.user, completo=False)
             cartitem, created = PedidoBebida.objects.get_or_create(cart=cart, item=item)
             cartitem.quantidade += 1
             cartitem.save()
-            
-            print(cartitem)
             num_of_item = cart.quantidade_total
-            
-            print(num_of_item)
-    """
-    product = Bebida.objects.get(id=product_id)
-    num_of_item = {"cart": 0}
-    if request.user.is_authenticated:
-        cart, created = Pedido.objects.get_or_create(user=request.user, completed=False)
-        cartitem, created = Item.objects.get_or_create(cart=cart, product=product)
-        cartitem.quantidade += 1
-        cartitem.save()
-        
-        print(cartitem)
-        num_of_item["cart"] = cart.num_of_items
-        
-        print(num_of_item)
-    """
+
     return JsonResponse(num_of_item, safe=False)
     

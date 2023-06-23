@@ -79,7 +79,7 @@ def campoVazio(request):
 
 # verifica se ao menos um campo está preenchido
 def todosCamposVazios(request):
-    campos = ["email", "password", "first_name", "last_name", "telefone", "bairro", "rua", "cep", "numero"]
+    campos = ["email", "password", "first_name", "last_name", "telefone", "bairro", "rua", "cep", "numero", "complemento"]
     for campo in campos:
         if request.POST[campo] != "":
             return False
@@ -157,6 +157,7 @@ def showItensCarrinho(request):
             lst_itens.append({
                 "nome": item.item.nome,
                 "qtd": item.quantidade,
+                "preco": item.item.preco,
             })
 
         # adiciona as pizzas
@@ -164,6 +165,8 @@ def showItensCarrinho(request):
             lst_itens.append({
                 "nome": item.item.nome,
                 "qtd": item.quantidade,
+                "preco": item.item.preco,
+                "tamanho": item.item.tamanho.tamanho,
             })
 
         # adiciona as pizzas 2 sabores

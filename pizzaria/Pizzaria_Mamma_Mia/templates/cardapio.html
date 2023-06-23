@@ -23,7 +23,7 @@
 
                     <p>
                         {{pizza.nome}} - 
-                        <select name='tamanho' class='form-control'>
+                        <select name='tamanho' id="tamanho-pizza{{pizza.id}}">
                             <option value="">Tamanho</option>
                                 {% for tamanho in tamanhos %}
                                     <option value="{{tamanho.id}}">{{tamanho.tamanho}}</option>
