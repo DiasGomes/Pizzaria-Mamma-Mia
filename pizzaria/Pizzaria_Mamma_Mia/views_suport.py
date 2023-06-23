@@ -146,11 +146,13 @@ def showQtdItensCarrinho(request):
 def showItensCarrinho(request):
     lst_itens = []
     total = None
+    cart_id = None
 
     # pega o usuário
     if request.user.is_authenticated:
-        cart_user, created = Carrinho.objects.get_or_create(user=1, completo=False)
+        cart_user, created = Carrinho.objects.get_or_create(user=request.user, completo=False)
         total = cart_user.preco_total
+        cart_id = cart_user.id
 
         # adiciona as bebidas ao carrinho
         for item in list(cart_user.cartBebidas.all()):
@@ -185,3 +187,6 @@ def showItensCarrinho(request):
         
     return {"itens": lst_itens, "total": total}
 
+def limpaCarrinho(request):
+    cart_user, created = Carrinho.objects.get_or_create(user=request.user, completo=False)
+    cart_user.delete()

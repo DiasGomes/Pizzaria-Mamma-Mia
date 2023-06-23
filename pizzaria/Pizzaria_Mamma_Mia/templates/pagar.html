@@ -1,0 +1,101 @@
+{% extends "index.html" %}
+{% load static %}
+{% block conteudo %}
+<!--
+<div class="pagamento-contain">
+    <h2>Forma de Pagamento</h2>
+  
+    <form action="{% url 'confirmar_pagamento' %}">
+      <input type="radio" id="cb-pagarNaPorta" name="pagamento" value="Pagar na Porta">
+      <label for="pagarNaPorta">Pagar na Porta</label>
+      
+      <input type="radio" id="cb-cartao" name="pagamento" value="Cartão">
+      <label for="cartao">Cartão</label>
+      
+      <input type="radio" id="cb-pix" name="pagamento" value="PIX">
+      <label for="pix">PIX</label><br>
+
+      <div class="tab-content" id="tag-pagarNaPorta">
+        <p>O pagamento será feito no endereço através do entregador</p>
+      </div>
+      <div class="tab-content" id="tag-cartao">
+        <p>Dados do cartão</p>
+      </div>
+      <div class="tab-content" id="tag-pix">
+        <img src="{% static 'qrcode.png' %}"><br>
+      </div>
+      
+        <input class="btn-confirmar-pagamento" type="submit" value="Pagar"><br>
+    </form>
+</div>
+
+<script>
+
+  $("#cb-pix").is(":checked")(function(e){
+    // Esconder todo o conteúdo das abas
+    var tabContents = document.getElementsByClassName('tab-content');
+    for (var i = 0; i < tabContents.length; i++) {
+      tabContents[i].classList.remove('active');
+    }
+
+
+    var tab_selected = document.getElementsByClassName('tag-pix');
+    tab_selected.classList.add('active');
+  }); 
+</script>
+-->
+<div class="confirma-pagamento-contain">
+  <div>
+    <h2 class="confirma-pagamento-titulo">Forma de Pagamento</h2>
+  </div>
+  <div>
+    <form action="{% url 'confirmar_pagamento' %}">
+      <input type="radio" id="PORTA" name="pagamento" value="PORTA" onclick="showContent(this)">
+      <label for="PORTA">Pagar na Porta</label>
+    
+      <input type="radio" id="CARTAO" name="pagamento" value="CARTAO" onclick="showContent(this)">
+      <label for="CARTAO">Cartão</label>
+    
+      <input type="radio" id="pix" name="pagamento" value="PIX" onclick="showContent(this)">
+      <label for="pix">PIX</label><br>
+      
+      <div id="contentPORTA" class="content">
+        <p>O pagamento será feito no endereço através do entregador</p>
+      </div>
+      <div id="contentCARTAO" class="content">
+        <p>Dados do cartão</p>
+      </div>
+      <div id="contentPIX" class="content">
+        <img src="{% static 'qrcode.png' %}"><br>
+      </div>
+      
+      <div class="btn-confirmar-pagamento-contain">
+        <input class="btn-confirmar-pagamento" type="submit" value="Pagar">
+      </div>
+  
+    </form>
+  </div>
+</div>
+
+  <script>
+    function showContent(radio) {
+      console.log(radio)
+      var contentId = "content" + radio.value.replace(/\s/g, '');
+      console.log(contentId)
+      var content = document.getElementById(contentId);
+      console.log(content)
+      var contents = document.getElementsByClassName("content");
+      for (var i = 0; i < contents.length; i++) {
+        contents[i].style.display = "none";
+      }
+
+      if (radio.checked) {
+        content.style.display = "block";
+        document.getElementsByClassName("btn-confirmar-pagamento")[0].style.display = "block";
+      } else {
+        document.getElementsByClassName("btn-confirmar-pagamento")[0].style.display = "none";
+      }
+    }
+  </script>
+
+{% endblock %}

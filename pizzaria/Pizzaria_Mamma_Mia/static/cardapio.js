@@ -44,8 +44,8 @@ function addPizzaToCart(e){
     let product_id = e.target.value
     let url = "add_to_cart/"
     let tamanho = document.getElementById("tamanho-pizza"+ product_id)
-    if(tamanho.value === null){
-        tamanho.value = 1
+    if(tamanho.value === ''){
+        tamanho.value = 2
     }
     let data = {id:product_id, nome:"pizza", tamanho: tamanho.value}
     console.log(product_id +" - " + tamanho.id + " - " +tamanho.value)

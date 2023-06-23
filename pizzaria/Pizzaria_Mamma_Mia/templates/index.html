@@ -5,6 +5,7 @@
         <link rel="icon" href="{% static 'logo.png' %}" type="image/png">
         <title>Pizzaria Mamma Mia</title>
         <link rel="stylesheet" href="{% static 'style.css' %}" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     </head>
     <body>
         <div id="titulo-navegacao">
@@ -30,6 +31,28 @@
                 
             </div>
         </div>
+        {% if messages %}
+
+            {% for message in messages %}
+
+            <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert-msg">
+            {{message}}
+                <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">X</button>
+            </div>
+            {% endfor %}
+            
+        {% endif %}
+        <script>
+            let btns = document.querySelectorAll(".btn-close")
+            btns.forEach(btn=>{
+                btn.addEventListener("click", remove_msg)
+            })
+            function remove_msg(e){
+                console.log("click")
+                $("#alert-msg").remove()
+            }
+        </script>
+        
         {% block conteudo %}{% endblock %}
     </body>
 </html>

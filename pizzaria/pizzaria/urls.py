@@ -18,4 +18,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('cadastro/', Cadastro.as_view(), name="cadastrar"),
     path('store/', store, name="store"),
+    path('pagar/', Pagar.as_view(), name='pagar'),
+    path("confirmar_pagamento/", confirmar_pagamento, name="confirmar_pagamento")
 ] + static (settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

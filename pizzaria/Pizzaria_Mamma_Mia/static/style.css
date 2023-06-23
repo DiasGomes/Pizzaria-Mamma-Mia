@@ -55,6 +55,7 @@ h1{
     font-weight: bold;
     color: white;
     text-decoration: none;
+    cursor: pointer;
 }
 
 #navegacao a:hover{
@@ -91,6 +92,7 @@ h1{
     font-weight: bold;
     width: 80%;
     height: 30px;
+    cursor: pointer;
 }
 
 .bebidas-cardapio, .pizzas-cardapio, .combos-cardapio{
@@ -113,6 +115,7 @@ h1{
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    cursor: pointer;
 }
 
 .aba-option{
@@ -221,6 +224,7 @@ h1{
     background-color: var(--my_blue);
     padding: 5px 5px;
     margin-bottom: 20px;
+    cursor: pointer;
 }
 
 .go-to-cadastrar{
@@ -258,6 +262,7 @@ h1{
     float: right;
     margin-right: 5%;
     margin-top: 20px;
+    cursor: pointer;
 }
 
 
@@ -299,6 +304,7 @@ table {
 .btn-pagar{
     text-align: center;
     margin-top: 20px;
+    cursor: pointer;
 }
 
 .btn-pagar button{
@@ -306,6 +312,7 @@ table {
     color: white;
     padding: 5px 5px;
     margin-bottom: 20px;
+    cursor: pointer;
 }
 
 .btn-pagar a{
@@ -313,8 +320,112 @@ table {
     padding: 5px 5px;
     color: white;
     text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-confirmar-pagamento{
+    background-color: var(--my_blue);
+    padding: 5px 5px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    display: none;
+}
+
+input[type="radio"]:checked ~ .btn-confirmar-pagamento {
+    display: block;
 }
 
 #carrinho-titulo{
+    text-align: center;
+}
+
+.pagamento-contain{
+    width: 30%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background-color: #d9d9d9;
+}
+
+.alert.alert-success.alert-dismissible.fade.show{
+    background-color: rgb(133, 236, 133);
+    width: 100%;
+    padding: 10px 10px;
+    margin-bottom: 20px;
+}
+
+.btn-close{
+    background-color: transparent;
+    border: None;
+    color: gray;
+    float: right;
+    margin-right: 1%;
+    cursor: pointer;
+}
+
+.content {
+    display: none;
+}
+
+.confirma-pagamento-contain{
+    width: 30%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    margin-top: 50px;
+}
+  
+.confirma-pagamento-titulo {
+    text-align: center;
+}
+  
+.confirma-pagamento-contain  form {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+}
+  
+
+  
+.confirma-pagamento-contain  .content {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+  
+.btn-confirmar-pagamento{
+    display: none;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+  
+.btn-confirmar-pagamento:hover {
+    background-color: #45a049;
+}
+
+.btn-confirmar-pagamento-contain{
     text-align: center;
 }

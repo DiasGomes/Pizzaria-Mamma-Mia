@@ -101,6 +101,21 @@ class CarrinhoView(View):
             return render(request, "carrinho.html", context) 
         else:
             return redirect('login') 
+        
+# tela de pagamento
+class Pagar(View):
+    def get(self, request):
+        # acesso somente para usuário autenticado
+        if request.user.is_authenticated:
+            cart_user, created = Carrinho.objects.get_or_create(user=request.user, completo=False)
+            total = cart_user.preco_total
+            context = {
+                "total": total,
+            }
+            context.update(showQtdItensCarrinho(request))
+            return render(request, "pagar.html", context) 
+        else:
+            return redirect('login') 
 
 
 """
@@ -145,6 +160,7 @@ def doLogin(request):
 
 # ações de logout de usuário
 def doLogout(request):
+    limpaCarrinho(request)
     logout(request)
     return redirect("home")
 
@@ -192,4 +208,14 @@ def add_to_cart(request):
             num_of_item = cart.quantidade_total
 
     return JsonResponse(num_of_item, safe=False)
+
+# executa o pagamento
+def confirmar_pagamento(request):
+    # acesso somente para usuário autenticado
+    if request.user.is_authenticated:
+        cart, created = Carrinho.objects.get_or_create(user=request.user, completo=False)
+        cart.completo = True
+        cart.save()
+        messages.success(request, "Pagamento realizado com sucesso!")
+        return redirect("home")
     
