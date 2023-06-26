@@ -62,8 +62,6 @@ h1{
     color: #d9d9d9;
 }
 
-
-
 .cardapio{
     width: 60%;
     position: relative;
@@ -219,19 +217,23 @@ h1{
     margin: 10px 0;
 }
 
-.btn-form{
+.btn{
+    background-color: #4CAF50;
+    padding: 10px 20px;
+    border-radius: 5px;
     color: white;
-    background-color: var(--my_blue);
-    padding: 5px 5px;
+    text-decoration: none;
+    margin-top: 20px;
     margin-bottom: 20px;
     cursor: pointer;
+    border: none;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.go-to-cadastrar{
-    text-decoration: None;
-    color: white;
-    background-color: var(--my_blue);
-    padding: 5px 5px;
+.btn:hover{
+    background-color: #45a049;
 }
 
 .perfil-info{
@@ -254,17 +256,20 @@ h1{
 }
 
 .btn-logout{
+    background-color: red;
+    padding: 10px 20px;
+    border-radius: 5px;
     color: white;
-    background-color: var(--my_blue);
-    padding: 5px 5px;
-    margin-bottom: 20px;
     text-decoration: none;
     float: right;
-    margin-right: 5%;
-    margin-top: 20px;
+    margin-right: 4%;
+    margin-top: 40px;
     cursor: pointer;
 }
 
+.btn-logout:hover{
+    background-color: rgb(226, 69, 69);
+}
 
 table {
     border-collapse: collapse;
@@ -307,29 +312,26 @@ table {
     cursor: pointer;
 }
 
-.btn-pagar button{
-    background-color: var(--my_blue);
-    color: white;
-    padding: 5px 5px;
-    margin-bottom: 20px;
-    cursor: pointer;
-}
-
-.btn-pagar a{
-    background-color: var(--my_blue);
-    padding: 5px 5px;
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-}
-
 .btn-confirmar-pagamento{
-    background-color: var(--my_blue);
-    padding: 5px 5px;
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
     display: none;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+  
+.btn-confirmar-pagamento:hover {
+    background-color: #45a049;
+}
+
+.btn-confirmar-pagamento-contain{
+    text-align: center;
 }
 
 input[type="radio"]:checked ~ .btn-confirmar-pagamento {
@@ -408,11 +410,11 @@ input[type="radio"]:checked ~ .btn-confirmar-pagamento {
     border-radius: 5px;
 }
   
-.btn-confirmar-pagamento{
-    display: none;
+.btn-disable{
+    pointer-events: none;
+    background-color: #d9d9d9;
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #4CAF50;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -420,12 +422,4 @@ input[type="radio"]:checked ~ .btn-confirmar-pagamento {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-}
-  
-.btn-confirmar-pagamento:hover {
-    background-color: #45a049;
-}
-
-.btn-confirmar-pagamento-contain{
-    text-align: center;
 }

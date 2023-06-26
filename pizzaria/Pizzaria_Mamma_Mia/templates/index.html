@@ -15,7 +15,7 @@
             </div>
             <div id="navegacao">
                 <a href="{% url 'home' %}">HOME</a>
-                <a href="{% url 'compra' %}">MONTAR PIZZA</a>
+                <a href="{% url 'montar-pizza' %}">MONTAR PIZZA</a>
                 <a href="{% url 'cardapio' %}">CARDAPIO</a>
 
                 {% if request.user.is_authenticated %}

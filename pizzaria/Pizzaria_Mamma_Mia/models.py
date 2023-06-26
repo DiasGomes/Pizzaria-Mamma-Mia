@@ -103,7 +103,9 @@ class Bebida(models.Model):
 class Combo(models.Model):
     descricao = models.CharField(max_length=100, unique=True)
     preco = models.DecimalField(max_digits=5, decimal_places=2)
-    fk_pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, null=True)
+    imagem = models.ImageField(null=True)
+    fk_pizza_1 = models.ForeignKey(Pizza, on_delete=models.CASCADE, null=True, related_name="pizza_1")
+    fk_pizza_2 = models.ForeignKey(Pizza, on_delete=models.CASCADE, null=True, related_name="pizza_2")
     fk_bebida = models.ForeignKey(Bebida, on_delete=models.CASCADE, null=True)
 
 class Bairro(models.Model):

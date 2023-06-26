@@ -82,12 +82,15 @@ class Cadastro(View):
         return render(request, "cadastro.html", context)
 
 # tela da compra
-class Compra(View):
+class MontarPizza(View):
     def get(self, request):
         # acesso somente para usuário autenticado
         if request.user.is_authenticated:
-            context = showQtdItensCarrinho(request)
-            return render(request, "compra.html", context) 
+            context = {
+                "sabores": dadosSabores(),
+            }
+            context.update(showQtdItensCarrinho(request))
+            return render(request, "montarPizza2Sabores.html", context) 
         else:
             return redirect('login')  
 
@@ -108,12 +111,15 @@ class Pagar(View):
         # acesso somente para usuário autenticado
         if request.user.is_authenticated:
             cart_user, created = Carrinho.objects.get_or_create(user=request.user, completo=False)
-            total = cart_user.preco_total
-            context = {
-                "total": total,
-            }
-            context.update(showQtdItensCarrinho(request))
-            return render(request, "pagar.html", context) 
+            if cart_user.quantidade_total > 0:    
+                total = cart_user.preco_total
+                context = {
+                    "total": total,
+                }
+                context.update(showQtdItensCarrinho(request))
+                return render(request, "pagar.html", context) 
+            else:
+                return redirect('home') 
         else:
             return redirect('login') 
 
