@@ -15,22 +15,30 @@ function getCookie(name) {
 }
 const csrftoken = getCookie('csrftoken');
 
-function removeFromCart(url, data){
-    console.log(data)
-    console.log(url)
+function removeFromCart(url, data) {
+    console.log(data);
+    console.log(url);
     fetch(url, {
         method: "POST",
-        headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},
+        headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
         body: JSON.stringify(data)
     })
-    .then(res=>res.json())
-    .then(data=>{
-        document.getElementById("num_of_items").innerHTML = data
-        console.log(data)
+    .then(response => {
+        // Avaliar a resposta do Django
+        if (response.ok) {
+            // Se a resposta estiver OK (código de status HTTP 200-299)
+            location.reload(); // Recarregar a página
+        } else {
+            throw new Error("Erro na solicitação AJAX"); // Tratar erros, se necessário
+        }
     })
-    .catch(error=>{
-        console.log(error)
+    .then(data => {
+        document.getElementById("num_of_items").innerHTML = data;
+        console.log(data);
     })
+    .catch(error => {
+        console.log(error);
+    });
 }
 
 // BOTÔES de romever item do carrinho

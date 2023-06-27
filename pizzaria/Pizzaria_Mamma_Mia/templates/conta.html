@@ -34,7 +34,7 @@
                     <input class="form-control mt-4" type="password" name="password-conf" id="senha-conf" placeholder="Confirme a Senha:"><br>     
                     <p class="form-subtitle">Endereço</p>
                     <select name='bairro' class='form-control'>
-                        <option value="">*Bairro</option>
+                        <option value="">Bairro</option>
                             {% for bairro in bairros %}
                             <option value="{{bairro.id}}">{{bairro.nome}}</option>
                             {% endfor %}
