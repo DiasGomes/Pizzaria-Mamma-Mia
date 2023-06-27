@@ -2,7 +2,7 @@
 {% load static %}
 {% block conteudo %}
 <div>
-    <h3 id="carrinho-titulo">Carrinho</h3>
+    <h3 id="carrinho-titulo">Meu Carrinho</h3>
     <table>
       {% if itens %}
        <thead>
@@ -10,18 +10,20 @@
           <th>Item</th>
           <th>Quantidade</th>
           <th>Preço</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
       {% for item in itens %}
           <tr>
               <td>{{item.nome}}
-                  {% if item.tamanho%}
+                  {% if item.tamanho %}
                       ({{item.tamanho}})
                   {% endif %}
               </td>
               <td>{{item.qtd}}</td>
               <td>R${{item.preco}}</td>
+              <td><button value="{{item.id}};{{item.tipo}}" class="btn-delete">-</button></td>
           </tr>
       {% endfor %}
         <tr class="total">
@@ -31,7 +33,7 @@
       </tbody>
       {% else %}
         <tr>
-          <th>Carrinho Vazio</th>
+          <th id="carrinho-Vazio-Msg">- Vazio -</th>
         </tr>
       {% endif %}
       </table>
@@ -45,5 +47,7 @@
       </div>
       
 </div>
+
+<script src="{% static 'carrinho.js' %}"></script>
 
 {% endblock %}

@@ -157,32 +157,42 @@ def showItensCarrinho(request):
         # adiciona as bebidas ao carrinho
         for item in list(cart_user.cartBebidas.all()):
             lst_itens.append({
+                "id": item.id,
                 "nome": item.item.nome,
                 "qtd": item.quantidade,
                 "preco": item.item.preco,
+                "tipo":"bebida",
             })
 
         # adiciona as pizzas
         for item in list(cart_user.cartPizzas.all()):
             lst_itens.append({
+                "id": item.id,
                 "nome": item.item.nome,
                 "qtd": item.quantidade,
                 "preco": item.item.preco,
                 "tamanho": item.item.tamanho.tamanho,
+                "tipo":"pizza",
             })
 
         # adiciona as pizzas 2 sabores
         for item in list(cart_user.cartPizza2Sabores.all()):
             lst_itens.append({
+                "id": item.id,
                 "nome": item.item.nome,
                 "qtd": item.quantidade,
+                "preco": item.item.preco,
+                "tipo":"pizza2sabores",
             })
 
         # adiciona os combos
         for item in list(cart_user.cartCombos.all()):
             lst_itens.append({
+                "id": item.id,
                 "nome": item.item.descricao,
                 "qtd": item.quantidade,
+                "preco": item.item.preco,
+                "tipo":"combo",
             })
         
     return {"itens": lst_itens, "total": total}

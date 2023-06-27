@@ -154,8 +154,8 @@ class Carrinho(models.Model):
         quantidade = 0
         quantidade += sum([item.quantidade for item in cartPizzas])
         quantidade += sum([item.quantidade for item in cartBebidas])
-        quantidade += sum([item.preco for item in cartCombos])
-        quantidade += sum([item.preco for item in cartPizza2Sabores])
+        quantidade += sum([item.quantidade for item in cartCombos])
+        quantidade += sum([item.quantidade for item in cartPizza2Sabores])
         return quantidade
     
     @property

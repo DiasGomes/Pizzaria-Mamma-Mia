@@ -1,5 +1,25 @@
 {% extends "index.html" %}
 {% load static %}
 {% block conteudo %}
-<p>COLOCAR ITENS EM DESTAQUE AQUI!</p>
+<div class="home">
+    <h2>Destaques</h2>
+    <div class="home-contain">
+        <div class="home-item">
+            {% if pizza.imagem %}
+                <img src="{{pizza.imagem.url}}" class="imagem-cardapio">
+            {% else %}
+                <img class="imagem-home" src="https://www.tudodesenhos.com/uploads/images/4973/pizza-inteira.jpg">
+            {% endif %}
+            <p>{{pizza.nome}}</p>
+        </div>
+        <div class="home-item">
+            {% if combo.imagem %}
+                <img src="{{combo.imagem.url}}" class="imagem-cardapio">
+            {% else %}
+                <img class="imagem-home" src="https://www.tudodesenhos.com/uploads/images/4973/pizza-inteira.jpg">
+            {% endif %}
+            <p>{{combo.descricao}}</p>
+        </div>
+    </div>
+</div>
 {% endblock %}

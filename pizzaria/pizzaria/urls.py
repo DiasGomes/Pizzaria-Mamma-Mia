@@ -10,6 +10,7 @@ urlpatterns = [
     path("cardapio/add_to_cart/", add_to_cart, name="add_to_cart"),
     path("montar-pizza/", MontarPizza.as_view(), name="montar-pizza"),
     path("carrinho/", CarrinhoView.as_view(), name="carrinho"),
+    path("carrinho/remove_from_cart/", remove_from_cart, name="remove_from_cart"),
     path("login/", Login.as_view(), name="login"),
     path("conta/", Conta.as_view(), name="conta"),
     path("editar-conta/", editarConta, name="editar-conta"),

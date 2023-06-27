@@ -48,6 +48,7 @@ h1{
 
 #titulo img{
     width: 20%;
+    height: 20%;
 }
 
 #navegacao a{
@@ -72,11 +73,11 @@ h1{
 }
 
 .imagem-cardapio{
-    height: 100px;
+    width: 50%;
 }
 
 .img-carrinho{
-    height: 30px;
+    width: 2%;
 }
 
 .titulo-cardapio{
@@ -163,6 +164,10 @@ h1{
 .aba li{
     display:inline-block;
     border-bottom: 0;
+}
+
+.cadastro-contain{
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .cadastro-contain, .perfil-contain, .edita-contain{
@@ -271,40 +276,45 @@ h1{
     background-color: rgb(226, 69, 69);
 }
 
-table {
+table{
     border-collapse: collapse;
     width: 50%;
     position: relative;
     margin-left: auto;
     margin-right: auto;
-  }
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
   
-  th, td {
+th, td{
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-  }
+}
   
-  tr.total {
+tr.total{
     font-weight: bold;
-  }
+}
   
-  tr.total td {
+tr.total td{
     border-top: 2px solid #000;
-  }
+}
   
-  th {
+th{
     background-color: #f2f2f2;
-  }
+}
   
-  td {
+td{
     background-color: #fff;
-  }
+}
   
-  td:nth-child(2),
-  td:nth-child(3) {
+td:nth-child(2),td:nth-child(3){
     text-align: center;
-  }
+}
+
+#carrinho-Vazio-Msg{
+    text-align: center;
+    color: #949494;
+}
 
 .btn-pagar{
     text-align: center;
@@ -422,4 +432,46 @@ input[type="radio"]:checked ~ .btn-confirmar-pagamento {
     position: relative;
     margin-left: auto;
     margin-right: auto;
+}
+
+.btn-delete{
+    background-color: rgb(189, 79, 79);
+    border-radius: 20px;
+    border: none;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-delete:hover{
+    background-color: red;
+}
+
+.home{
+    width: 50%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f2f2f2;
+    margin-top: 50px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.home-contain{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.home-item{
+    width: 50%;
+}
+
+.imagem-home{
+    width: 75%;
 }

@@ -16,8 +16,6 @@ function getCookie(name) {
 const csrftoken = getCookie('csrftoken');
 
 function addToCart(url, data){
-    console.log(data)
-    console.log(url)
     fetch(url, {
         method: "POST",
         headers: {"Content-Type":"application/json", 'X-CSRFToken': csrftoken},
@@ -48,7 +46,6 @@ function addPizzaToCart(e){
         tamanho.value = 2
     }
     let data = {id:product_id, nome:"pizza", tamanho: tamanho.value}
-    console.log(product_id +" - " + tamanho.id + " - " +tamanho.value)
     addToCart(url , data)
     
 }
@@ -65,6 +62,21 @@ function addBebidaToCart(e){
     let url = "add_to_cart/"
     let data = {id:product_id, nome:"bebida"}
     
+    addToCart(url , data)
+    
+}
+
+// BOTÔES de combos
+let combosbtns = document.querySelectorAll(".combos-cardapio button")
+
+combosbtns.forEach(btn=>{
+    btn.addEventListener("click", addComboToCart)
+})
+
+function addComboToCart(e){
+    let product_id = e.target.value
+    let url = "add_to_cart/"
+    let data = {id:product_id, nome:"combo"}
     addToCart(url , data)
     
 }

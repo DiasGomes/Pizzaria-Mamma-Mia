@@ -14,7 +14,11 @@ CLASSES
 # tela do home
 class Home(View):
     def get(self, request):
-        context = showQtdItensCarrinho(request)
+        context = {
+            'pizza': Sabor.objects.get(id=1),
+            'combo': Combo.objects.get(id=1),
+        }
+        context.update(showQtdItensCarrinho(request))
         return render(request, "home.html", context)
 
 # tela que exibe os cárdapios(Pizzas e bebibas)
@@ -23,7 +27,7 @@ class Cardapio(View):
         context = {
             "bebidas": list(Bebida.objects.all()),
             "sabores": dadosSabores(),
-            "combos": [],
+            "combos": list(Combo.objects.all()),
             "tamanhos": list(Tamanho.objects.all())
         }
         # concatena informações do carrinho
@@ -212,8 +216,36 @@ def add_to_cart(request):
             cartitem.quantidade += 1
             cartitem.save()
             num_of_item = cart.quantidade_total
+    # adiciona combos ao carrinho
+    elif product_nome == "combo":
+        if request.user.is_authenticated:
+            item = Combo.objects.get(id=product_id)
+            cart, created = Carrinho.objects.get_or_create(user=request.user, completo=False)
+            cartitem, created = PedidoCombo.objects.get_or_create(cart=cart, item=item)
+            cartitem.quantidade += 1
+            cartitem.save()
+            num_of_item = cart.quantidade_total
 
     return JsonResponse(num_of_item, safe=False)
+
+def remove_from_cart(request):
+    data = json.loads(request.body)
+    product_id = data["id"]
+    product_nome = data["nome"]
+    if request.user.is_authenticated:
+        cart, created = Carrinho.objects.get_or_create(user=request.user, completo=False)
+        if product_nome == "pizza":
+            item = cart.cartPizzas.get(id=product_id)
+        elif product_nome == "bebida":
+            item = cart.cartBebidas.get(id=product_id)
+        elif product_nome == "combo":
+            item = cart.cartCombos.get(id=product_id)
+        elif product_nome == "pizza2sabores":
+            item = cart.cartPizza2Sabores.get(id=product_id)
+        item.delete()
+    context = showItensCarrinho(request)
+    context.update(showQtdItensCarrinho(request))
+    return JsonResponse(context, safe=False)
 
 # executa o pagamento
 def confirmar_pagamento(request):
