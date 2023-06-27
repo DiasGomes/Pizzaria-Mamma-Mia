@@ -1,7 +1,31 @@
 {% extends "index.html" %}
 {% load static %}
 {% block conteudo %}
-<div>
-    <h3>Montar Pizza</h3>
+<div class="montar-contain">
+    <h3>Montar Pizza com Dois Sabores</h3>
+    
+    <div>
+        <select name='primeiro-sabor' id="primeiro-sabor-montar">
+            <option value="">Sabores</option>
+                {% for sabor in sabores %}
+                    <option value="{{sabor.id}}">{{sabor.nome}}</option>
+                {% endfor %}
+        </select>
+        <select name='segundo-sabor' id="segundo-sabor-montar">
+            <option value="">Sabores</option>
+                {% for sabor in sabores %}
+                    <option value="{{sabor.id}}">{{sabor.nome}}</option>
+                {% endfor %}
+        </select>
+        <select name='tamanho' id="tamanho-montar">
+            <option value="">Tamanho</option>
+                {% for tamanho in tamanhos %}
+                    <option value="{{tamanho.id}}">{{tamanho.tamanho}}</option>
+                {% endfor %}
+        </select>
+    </div>
+    <button class="btn_pedido" id="btn-pizza-2-sabores">ADICIONAR AO CARRINHO</button>
 </div>
+
+<script src="{% static 'montarPizza2Sabores.js' %}"></script>
 {% endblock %}

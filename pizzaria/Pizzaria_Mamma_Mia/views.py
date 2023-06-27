@@ -91,7 +91,8 @@ class MontarPizza(View):
         # acesso somente para usuário autenticado
         if request.user.is_authenticated:
             context = {
-                "sabores": dadosSabores(),
+                "sabores": list(Sabor.objects.all()),
+                "tamanhos": list(Tamanho.objects.all()),
             }
             context.update(showQtdItensCarrinho(request))
             return render(request, "montarPizza2Sabores.html", context) 
@@ -194,13 +195,15 @@ def editarConta(request):
 
 def add_to_cart(request):
     data = json.loads(request.body)
-    product_id = data["id"]
-    product_nome = data["nome"]
+    product_id = data["id"] if "id" in data else None
+    product_nome = data["nome"] if "nome" in data else None
+    tamanho = data["tamanho"] if "tamanho" in data else None
+    sabor1 = data["sabor1"] if "sabor1" in data else None
+    sabor2 = data["sabor2"] if "sabor2" in data else None
     num_of_item = 0
     # adiciona pizzas ao carrinho
     if product_nome == "pizza":
         if request.user.is_authenticated:
-            tamanho = data["tamanho"]
             item = Pizza.objects.get(sabor=product_id, tamanho=tamanho)
             cart, created = Carrinho.objects.get_or_create(user=request.user, completo=False)
             cartitem, created = PedidoPizza.objects.get_or_create(cart=cart, item=item)
@@ -225,6 +228,35 @@ def add_to_cart(request):
             cartitem.quantidade += 1
             cartitem.save()
             num_of_item = cart.quantidade_total
+    # adiciona pizza de dois sabores ao carrinho
+    elif product_nome == "pizza2sabores":
+        if request.user.is_authenticated:
+            cart, created = Carrinho.objects.get_or_create(user=request.user, completo=False)
+            # se o sabor é o mesmo cadastra uma pizza normal
+            if sabor1 == sabor2:
+                item = Pizza.objects.get(sabor=sabor1, tamanho=tamanho)
+                cartitem, created = PedidoPizza.objects.get_or_create(cart=cart, item=item)
+                cartitem.quantidade += 1
+                cartitem.save()
+                num_of_item = cart.quantidade_total
+            # sabores diferentes cadastra pizza de dois sabores
+            else:
+                # tenta pegar a pizza de dois sabores independente da ordem sdos sabores passada
+                try:
+                    item = Pizza2Sabores.objects.get(primeiro_sabor=sabor1, segundo_sabor=sabor2, tamanho=tamanho)
+                    cartitem, created = PedidoPizza2Sabores.objects.get_or_create(cart=cart, item=item)
+                    cartitem.quantidade += 1
+                    cartitem.save()
+                    num_of_item = cart.quantidade_total
+                except:
+                    try:
+                        item = Pizza2Sabores.objects.get(primeiro_sabor=sabor2, segundo_sabor=sabor1, tamanho=tamanho)
+                        cartitem, created = PedidoPizza2Sabores.objects.get_or_create(cart=cart, item=item)
+                        cartitem.quantidade += 1
+                        cartitem.save()
+                        num_of_item = cart.quantidade_total
+                    except:
+                        messages.success(request, "Ops! Ocorreu algo inesperado")
 
     return JsonResponse(num_of_item, safe=False)
 
