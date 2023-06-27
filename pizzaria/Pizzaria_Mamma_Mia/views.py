@@ -289,3 +289,4 @@ def confirmar_pagamento(request):
         messages.success(request, "Pagamento realizado com sucesso!")
         return redirect("home")
     
+    

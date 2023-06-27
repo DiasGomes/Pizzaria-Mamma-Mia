@@ -14,8 +14,8 @@
         <div class="pizzas-cardapio">
             {% for pizza in sabores %}
                 <div class="pizzas">
-                    {% if bebida.imagem %}
-                        <img src="{{pizza.imagem.url}}" class="imagem-cardapio">
+                    {% if pizza.imagem %}
+                        <img src="/media/{{pizza.imagem}}" class="imagem-cardapio">
                     {% else %}
                         <img class="imagem-cardapio" src="https://www.tudodesenhos.com/uploads/images/4973/pizza-inteira.jpg">
                     {% endif %}
